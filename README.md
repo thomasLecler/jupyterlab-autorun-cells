@@ -11,7 +11,7 @@ notebook.
 ## Install
 
 ```bash
-jupyter labextension install epi2melabs-autorun
+jupyter labextension install @epi2melabs/jupyterlab-autorun-cells
 ```
 
 ## Contributing
