@@ -1,5 +1,5 @@
 {
-  "name": "jupyterlab-autorun-cells",
+  "name": "@epi2melabs/jupyterlab-autorun-cells",
   "version": "0.1.0",
   "description": "Allows toggling of code cells to execute automatically after opening a notebook.",
   "keywords": [
@@ -52,5 +52,8 @@
   ],
   "jupyterlab": {
     "extension": true
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
