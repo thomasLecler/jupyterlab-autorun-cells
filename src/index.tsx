@@ -4,7 +4,7 @@ import {
 } from '@jupyterlab/application';
 
 import {
-  Cell, CodeCell
+  Cell, CodeCell, MarkdownCell
 } from '@jupyterlab/cells';
 
 import {
@@ -19,6 +19,8 @@ const AUTORUN_ENABLED_CLASS = 'epi2melabs-autorun-enabled';
 const EXT_NAME = 'epi2melabs-autorun';
 
 const AUTORUN = 'autorun';
+
+const MARKDOWN = 'markdown';
 
 const CODE = 'code';
 
@@ -93,6 +95,9 @@ const extension: JupyterFrontEndPlugin<void> = {
                         CodeCell.execute(cell as CodeCell, notebookPanel.sessionContext, {
                             recordTiming: notebook.notebookConfig.recordTiming
                         });
+                        break;
+                      case MARKDOWN:
+                        (cell as MarkdownCell).rendered = true;
                         break;
                       default:
                         break;
