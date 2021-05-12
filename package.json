@@ -1,6 +1,6 @@
 {
   "name": "@epi2melabs/jupyterlab-autorun-cells",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Allows toggling of code cells to execute automatically after opening a notebook.",
   "keywords": [
     "jupyter",
@@ -12,10 +12,11 @@
     "url": "https://github.com/epi2me-labs/jupyterlab-autorun-cells/issues"
   },
   "license": "BSD-3-Clause",
-  "author": "trich",
+  "author": "epi2melabs",
   "files": [
     "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
-    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}",
+    "style/index.js"
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -25,35 +26,50 @@
     "url": "https://https://github.com/epi2me-labs/jupyterlab-autorun-cells.git"
   },
   "scripts": {
-    "build": "tsc",
-    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "build": "jlpm run build:lib && jlpm run build:labextension:dev",
+    "build:labextension": "jupyter labextension build .",
+    "build:labextension:dev": "jupyter labextension build --development True .",
+    "build:lib": "tsc",
+    "build:prod": "jlpm run clean && jlpm run build:lib && jlpm run build:labextension",
+    "clean": "jlpm run clean:lib",
+    "clean:all": "jlpm run clean:lib && jlpm run clean:labextension",
+    "clean:labextension": "rimraf jupyterlab_autorun_cells/labextension",
+    "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
+    "install:extension": "jlpm run build",
     "prepare": "jlpm run clean && jlpm run build",
-    "watch": "tsc -w"
+    "watch": "run-p watch:src watch:labextension",
+    "watch:labextension": "jupyter labextension watch .",
+    "watch:src": "tsc -w"
   },
   "dependencies": {
-    "@jupyterlab/application": "^2.0.0",
-    "@jupyterlab/cells": "^2.2.2",
-    "@jupyterlab/notebook": "^2.2.5"
+    "@jupyterlab/application": "^3.0.10",
+    "@jupyterlab/cells": "^3.0.10",
+    "@jupyterlab/notebook": "^3.0.10"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.25.0",
-    "@typescript-eslint/parser": "^2.25.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-plugin-prettier": "^3.1.2",
-    "prettier": "1.16.4",
-    "rimraf": "^2.6.1",
-    "typescript": "~3.7.0"
+    "@jupyterlab/builder": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.1",
+    "rimraf": "^3.0.2",
+    "typescript": "~4.1.3"
   },
   "sideEffects": [
-    "style/*.css"
+    "style/*.css",
+    "style/index.js"
   ],
   "jupyterlab": {
-    "extension": true
+    "extension": true,
+    "outputDir": "jupyterlab_autorun_cells/labextension"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "styleModule": "style/index.js"
 }
