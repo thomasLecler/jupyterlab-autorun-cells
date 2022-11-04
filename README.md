@@ -4,7 +4,7 @@
 
 Allows toggling of code cells to execute automatically after opening a notebook.
 
-
+This extension add a menu item called ‘toggle autorun cell at launch’ when right click on a code cell. Then a purple circle is display on the right of the cell.
 
 ## Requirements
 
